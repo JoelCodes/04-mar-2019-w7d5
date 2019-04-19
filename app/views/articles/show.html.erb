@@ -1,0 +1,38 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @article.title %>
+</p>
+
+<p>
+  <strong>Author:</strong>
+  <%= @article.author %>
+</p>
+
+<p>
+  <strong>Body:</strong>
+  <%= @article.body %>
+</p>
+<%= form_for([@article, @comment]) do |form| %>
+  <p>
+    <%= form.label :email %>
+    <%= form.email_field :email %>
+  </p>
+  <p>
+    <%= form.label :body %>
+    <%= form.text_area :body %>
+  </p>
+  <p><%= form.submit %></p>
+<% end%>
+<% if @existing_comments.size == 0 %>
+  <p>No Comments</p>
+<% else %>
+  <ul>
+    <% @existing_comments.each do |comment| %>
+      <li><%= comment.body %> ~ <%= comment.email %> <%= link_to 'Destroy', comment, method: :delete, data: { confirm: "Are you sure? #{comment.email} makes some valid points." } %></li>
+    <% end %>
+  </ul>
+<% end %>
+<%= link_to 'Edit', edit_article_path(@article) %> |
+<%= link_to 'Back', articles_path %>
